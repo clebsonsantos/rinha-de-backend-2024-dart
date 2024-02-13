@@ -7,7 +7,6 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 
 import 'controllers/client_controller.dart';
-import 'repositories/client_repository.dart';
 import 'repositories/postgres_client_repository.dart';
 import 'repositories/postgres_transaction_repository.dart';
 
@@ -21,8 +20,10 @@ Future<void> bootstrap(Router router) async {
       username: '${env["DB_USER"]}', password: '${env["DB_PASS"]}');
 
   connection.open();
+
   final transactionRepository = PostgresTransactionRepository(connection);
   final clientRepository = PostgresClienteRepository(connection);
+
   final ClientController clientController =
       ClientController(transactionRepository, clientRepository);
 
@@ -33,7 +34,7 @@ Future<void> bootstrap(Router router) async {
 
   final handler = Pipeline().addMiddleware(logRequests()).addHandler(router);
 
-  int port = env["PORT"] != null ? int.parse(env["PORT"]!) : 3000;
+  int port = env["PORT"] != null ? int.parse(env["PORT"]!) : 8080;
 
   final server = await serve(handler, ip, port);
   print('Server listening on port ${server.port}');

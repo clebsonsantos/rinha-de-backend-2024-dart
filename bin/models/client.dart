@@ -28,9 +28,10 @@ class Client {
   }
 
   factory Client.convertRowToClient(PostgreSQLResultRow clientRow) {
+    final client = clientRow.toColumnMap();
     return Client(
-        id: int.parse(clientRow.toColumnMap()['id']),
-        nome: clientRow.toColumnMap()['nome'],
-        limite: int.parse(clientRow.toColumnMap()['limite']));
+        id: int.parse(client['id']),
+        nome: client['nome'],
+        limite: int.parse(client['limite']));
   }
 }

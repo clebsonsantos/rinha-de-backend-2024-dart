@@ -1,15 +1,15 @@
 class Transaction {
   final int id;
   final int clientId;
-  final double value;
-  final String type;
-  final String description;
+  final double valor;
+  final String tipo;
+  final String descricao;
 
   Transaction({
     required this.id,
     required this.clientId,
-    required this.value,
-    required this.type,
-    required this.description,
+    required this.valor,
+    required this.tipo,
+    required this.descricao,
   });
 }
