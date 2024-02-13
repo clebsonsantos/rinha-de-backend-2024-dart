@@ -18,7 +18,7 @@ class ClientController {
 
       final client = await clientRepository.getClientByID(clientId);
       if (client == null) {
-        return Response(404,
+        return Response(HttpStatus.notFound,
             headers: {HttpHeaders.contentTypeHeader: "application/json"});
       }
 
@@ -26,14 +26,12 @@ class ClientController {
       final Map<String, dynamic> transaction = jsonDecode(body);
       await transactionRepository.createTransaction(clientId, transaction);
 
-      return Response(200,
+      return Response(HttpStatus.ok,
           body: jsonEncode({"limite": 100000, "saldo": -9098}),
           headers: {HttpHeaders.contentTypeHeader: "application/json"});
     } catch (e) {
       print(e.toString());
-      return Response.internalServerError(
-        body: jsonEncode({"error": e.toString()}),
-      );
+      return Response.internalServerError();
     }
   }
 }

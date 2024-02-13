@@ -1,7 +1,7 @@
 name: rinha_de_backend_2024_dart
 description: Aplicação para a competição Rinha do Backend 2024
 version: 1.0.0
-# homepage: https://www.example.com
+homepage: https://github.com/clebsonsantos/rinha-de-backend-2024-dart
 
 environment:
   sdk: '>=2.18.6 <3.0.0'
