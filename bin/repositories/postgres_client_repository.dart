@@ -5,19 +5,19 @@ import 'package:postgres/postgres.dart';
 import '../models/client.dart';
 import 'client_repository.dart';
 
-class PgClienteRepository implements ClientRepository {
+class PostgresClienteRepository implements ClientRepository {
   final PostgreSQLConnection _connection;
-  PgClienteRepository(this._connection);
+  PostgresClienteRepository(this._connection);
 
   @override
-  Future<Client> getClientByID(int clientId) async {
+  Future<Client?> getClientByID(int clientId) async {
     final result = await _connection.query(
       'SELECT * FROM clientes WHERE id = @clientId',
       substitutionValues: {'clientId': clientId},
     );
 
     if (result.isEmpty) {
-      throw StateError('Cliente não encontrado');
+      return null;
     }
 
     return result
