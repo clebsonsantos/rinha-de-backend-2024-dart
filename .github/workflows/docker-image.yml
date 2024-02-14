@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  DOCKER_IMAGE_VERSION: 1.0.1
+  DOCKER_IMAGE_VERSION: 1.0.0
 
 jobs:
   CI:
@@ -28,5 +28,5 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
-          clebsantos/rinha-do-backend-2024-dart:v${{ env.DOCKER_IMAGE_VERSION }}
-          clebsantos/rinha-do-backend-2024-dart:latest
+          clebsantos/rinha-de-backend-2024-dart:v${{ env.DOCKER_IMAGE_VERSION }}
+          clebsantos/rinha-de-backend-2024-dart:latest
