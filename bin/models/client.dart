@@ -24,8 +24,6 @@ class Client {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
-      'nome': nome,
       'limite': limite,
       'saldo': saldo,
     };

@@ -10,6 +10,10 @@ class NewTransactionUseCase {
   NewTransactionUseCase(this.clientRepository, this.transactionRepository);
 
   Future<int> execute(int clientId, String body) async {
+    if (clientId == 0) {
+      throw Exception("The field @clientId is required");
+    }
+
     final client = await clientRepository.getClientByID(clientId);
 
     if (client == null) {
