@@ -1,7 +1,3 @@
-CREATE DATABASE crebito;
-
-\c crebito;
-
 CREATE TABLE clientes (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
