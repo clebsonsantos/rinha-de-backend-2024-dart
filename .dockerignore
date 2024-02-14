@@ -7,3 +7,6 @@ build/
 .gitignore
 .idea/
 .packages
+docker-compose.yaml
+executar-teste-local.sh
+script.sql
