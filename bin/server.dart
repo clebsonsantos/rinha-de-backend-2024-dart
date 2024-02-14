@@ -9,6 +9,7 @@ import 'package:shelf/shelf_io.dart';
 import 'controllers/client_controller.dart';
 import 'repositories/postgres_client_repository.dart';
 import 'repositories/postgres_transaction_repository.dart';
+import 'usecases/new_transaction.dart';
 
 final _router = Router();
 
@@ -24,8 +25,11 @@ Future<void> bootstrap(Router router) async {
   final transactionRepository = PostgresTransactionRepository(connection);
   final clientRepository = PostgresClienteRepository(connection);
 
+  final newTransactionUseCase =
+      NewTransactionUseCase(clientRepository, transactionRepository);
+
   final ClientController clientController =
-      ClientController(transactionRepository, clientRepository);
+      ClientController(newTransactionUseCase);
 
   router.post("/clientes/<ClientID>/transacoes",
       clientController.createTransactionToClient);

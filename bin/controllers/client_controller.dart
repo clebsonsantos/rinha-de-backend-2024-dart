@@ -3,34 +3,31 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:shelf/shelf.dart';
-import '../repositories/client_repository.dart';
-import '../repositories/transaction_repository.dart';
+import '../usecases/new_transaction.dart';
 
 class ClientController {
-  final TransactionRepository transactionRepository;
-  final ClientRepository clientRepository;
+  final NewTransactionUseCase newTransaction;
 
-  ClientController(this.transactionRepository, this.clientRepository);
+  ClientController(this.newTransaction);
 
   FutureOr<Response> createTransactionToClient(Request request) async {
     try {
       int clientId = int.parse(request.url.pathSegments[1]);
 
-      final client = await clientRepository.getClientByID(clientId);
-      if (client == null) {
-        return Response(HttpStatus.notFound,
+      final body = await request.readAsString();
+
+      final result = await newTransaction.execute(clientId, body);
+
+      if (result != HttpStatus.ok) {
+        return Response(result,
             headers: {HttpHeaders.contentTypeHeader: "application/json"});
       }
-
-      final body = await request.readAsString();
-      final Map<String, dynamic> transaction = jsonDecode(body);
-      await transactionRepository.createTransaction(clientId, transaction);
 
       return Response(HttpStatus.ok,
           body: jsonEncode({"limite": 100000, "saldo": -9098}),
           headers: {HttpHeaders.contentTypeHeader: "application/json"});
     } catch (e) {
-      print(e.toString());
+      print(e);
       return Response.internalServerError();
     }
   }

@@ -24,4 +24,16 @@ class PostgresClienteRepository implements ClientRepository {
         .map((client) => Client.convertRowToClient(client))
         .firstWhere((element) => element.id == clientId);
   }
+
+  @override
+  Future<void> updateClient(Client client) async {
+    await _connection.query(
+        'UPDATE clientes SET nome = @clientName, limite = @clientLimite, saldo = @clientBalance WHERE id = @clientId',
+        substitutionValues: {
+          'clientName': client.nome,
+          'clientLimite': client.limite,
+          'clientBalance': client.saldo,
+          'clientId': client.id,
+        });
+  }
 }

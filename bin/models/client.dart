@@ -5,17 +5,20 @@ class Client {
     required this.id,
     required this.nome,
     required this.limite,
+    required this.saldo,
   });
 
   final int id;
   final String nome;
   final int limite;
+  int saldo;
 
   factory Client.fromJson(Map<String, dynamic> json) {
     return Client(
       id: json['id'] as int,
       nome: json['nome'] as String,
       limite: json['limite'] as int,
+      saldo: json['saldo'] as int,
     );
   }
 
@@ -24,14 +27,16 @@ class Client {
       'id': id,
       'nome': nome,
       'limite': limite,
+      'saldo': saldo,
     };
   }
 
   factory Client.convertRowToClient(PostgreSQLResultRow clientRow) {
     final client = clientRow.toColumnMap();
     return Client(
-        id: int.parse(client['id']),
+        id: client['id'],
         nome: client['nome'],
-        limite: int.parse(client['limite']));
+        limite: client['limite'],
+        saldo: client['saldo']);
   }
 }
