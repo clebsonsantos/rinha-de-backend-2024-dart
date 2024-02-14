@@ -1,32 +1,53 @@
-version: "3.5"
+version: '3'
 
 services:
+  database:
+    image: postgres:latest
+    hostname: database
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: postgres
+      POSTGRES_DB: crebito
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
+      - ./postgres.conf:/etc/postgresql/postgresql.conf
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    deploy:
+      resources:
+        limits:
+          cpus: "0.13"
+          memory: "140MB"
+
   api01: &api
     image: clebsantos/rinha-de-backend-2024-dart:latest
     hostname: api01
     environment:
-      DB_HOST: db
+      DB_HOST: database
       DB_PORT: 5432
       DB_PASS: docker
       DB_USER: postgres
       DB_SCHEMA: crebito
       PORT: 8080
     ports:
-      - 8080:8080
-    depends_on:
-      - db
+      - "8080:8080"
     deploy:
       resources:
         limits:
           cpus: "0.6"
           memory: "200MB"
+    depends_on:
+      - database
 
   api02:
     <<: *api 
     hostname: api02
     ports:
-      - 8080:8080
- 
+      - "8080:8080"
+    depends_on:
+      - database
+
   nginx:
     image: nginx:latest
     volumes:
@@ -42,24 +63,6 @@ services:
           cpus: "0.17"
           memory: "10MB"
 
-  db:
-    image: postgres:latest
-    hostname: db
-    environment:
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=crebito
-    ports:
-      - 5432:5432
-    command: postgres -c config_file=/etc/postgresql/postgresql.conf
-    volumes:
-      - ./script.sql:/docker-entrypoint-initdb.d/script.sql
-      - ./postgres.conf:/etc/postgresql/postgresql.conf
-    deploy:
-      resources:
-        limits:
-          cpus: "0.13"
-          memory: "140MB"
 networks:
   default:
     driver: bridge
