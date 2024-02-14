@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 RESULTS_WORKSPACE="$(pwd)/load-test/user-files/results"
-GATLING_BIN_DIR=$HOME/gatling/3.10.3/bin
+GATLING_BIN_DIR=$HOME/gatling/bin
 GATLING_WORKSPACE="$(pwd)/load-test/user-files"
 
 runGatling() {
