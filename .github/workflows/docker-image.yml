@@ -22,13 +22,11 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         
     - name: Build and push Docker Image
-      env:
-        DOCKER_IMAGE_VERSION: ${{ env.DOCKER_IMAGE_VERSION }}
       uses: docker/build-push-action@v5.0.0
       with:
         context: .
         file: ./Dockerfile
         push: true
         tags: |
-          clebsantos/rinha-do-backend-2024-dart:v${DOCKER_IMAGE_VERSION}
+          clebsantos/rinha-do-backend-2024-dart:v${{ env.DOCKER_IMAGE_VERSION }}
           clebsantos/rinha-do-backend-2024-dart:latest
