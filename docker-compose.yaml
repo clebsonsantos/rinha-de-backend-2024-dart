@@ -13,11 +13,14 @@ services:
     volumes:
       - ./script.sql:/docker-entrypoint-initdb.d/script.sql
       - ./postgres.conf:/etc/postgresql/postgresql.conf
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U postgres -d crebito -q -t 1'"]
+      start_period: 1s
     deploy:
       resources:
         limits:
           cpus: "0.13"
-          memory: "140MB"
+          memory: "350MB"
 
   api01: &api
     image: clebsantos/rinha-de-backend-2024-dart:latest
@@ -29,13 +32,11 @@ services:
       DB_USER: postgres
       DB_SCHEMA: crebito
       PORT: 8080
-    ports:
-      - "8080:8080"
     deploy:
       resources:
         limits:
           cpus: "0.6"
-          memory: "200MB"
+          memory: "70MB"
     depends_on:
       database:
         condition: service_healthy
@@ -43,12 +44,9 @@ services:
   api02:
     <<: *api 
     hostname: api02
-    ports:
-      - "8080:8080"
     depends_on:
       database:
         condition: service_healthy
-
 
   nginx:
     image: nginx:latest
@@ -63,7 +61,7 @@ services:
       resources:
         limits:
           cpus: "0.17"
-          memory: "10MB"
+          memory: "60MB"
 
 networks:
   default:
