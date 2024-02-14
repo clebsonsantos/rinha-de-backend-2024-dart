@@ -8,7 +8,7 @@ import '../usecases/new_transaction_usecase.dart';
 
 class ClientController {
   final NewTransactionUseCase newTransaction;
-  final GetClientByID getClientByID;
+  final GetClientByIDUseCase getClientByID;
 
   ClientController(this.newTransaction, this.getClientByID);
 

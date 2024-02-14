@@ -29,7 +29,7 @@ Future<void> bootstrap(Router router) async {
   final newTransactionUseCase =
       NewTransactionUseCase(clientRepository, transactionRepository);
 
-  final getClientById = GetClientByID(clientRepository);
+  final getClientById = GetClientByIDUseCase(clientRepository);
 
   final ClientController clientController =
       ClientController(newTransactionUseCase, getClientById);

@@ -1,9 +1,9 @@
 import '../models/client.dart';
 import '../repositories/client_repository.dart';
 
-class GetClientByID {
+class GetClientByIDUseCase {
   final ClientRepository clientRepository;
-  GetClientByID(this.clientRepository);
+  GetClientByIDUseCase(this.clientRepository);
 
   Future<Client?> execute(int clientId) async {
     if (clientId == 0) {
