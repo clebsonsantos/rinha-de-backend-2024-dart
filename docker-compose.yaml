@@ -13,7 +13,6 @@ services:
     volumes:
       - ./script.sql:/docker-entrypoint-initdb.d/script.sql
       - ./postgres.conf:/etc/postgresql/postgresql.conf
-    command: postgres -c config_file=/etc/postgresql/postgresql.conf
     deploy:
       resources:
         limits:
@@ -38,7 +37,8 @@ services:
           cpus: "0.6"
           memory: "200MB"
     depends_on:
-      - database
+      database:
+        condition: service_healthy
 
   api02:
     <<: *api 
@@ -46,7 +46,9 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - database
+      database:
+        condition: service_healthy
+
 
   nginx:
     image: nginx:latest
