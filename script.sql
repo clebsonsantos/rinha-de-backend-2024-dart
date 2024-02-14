@@ -1,6 +1,6 @@
 SET TIME ZONE 'UTC';
 
-CREATE IF NOT EXISTS TABLE clientes (
+CREATE TABLE IF NOT EXISTS clientes (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(255) NOT NULL,
   limite INTEGER NOT NULL,
@@ -15,7 +15,7 @@ VALUES
   ('padaria joia de cocaia', 100000 * 100, 0),
   ('kid mais', 5000 * 100, 0);
 
-CREATE IF NOT EXISTS TABLE transacoes (
+CREATE TABLE IF NOT EXISTS transacoes (
     id SERIAL PRIMARY KEY,
     cliente_id INTEGER REFERENCES clientes(id),
     valor DECIMAL NOT NULL,

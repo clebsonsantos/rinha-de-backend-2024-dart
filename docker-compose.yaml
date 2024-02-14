@@ -2,8 +2,7 @@ version: "3.5"
 
 services:
   api01: &api
-    # image: clebsantos/rinha-de-backend-2024-dart:latest
-    build: .
+    image: clebsantos/rinha-de-backend-2024-dart:latest
     hostname: api01
     environment:
       DB_HOST: db
